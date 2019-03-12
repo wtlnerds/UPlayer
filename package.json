@@ -1,0 +1,51 @@
+{
+  "name": "uplayer",
+  "version": "0.0.1",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "electron": "electron ."
+  },
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "Renyuan Xue, Yuchen Zhou",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^4.0.7",
+    "react-scripts": "^2.1.5"
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "@material-ui/lab": "^3.0.0-alpha.30",
+    "@material-ui/styles": "^3.0.0-alpha.10",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-loading-overlay": "^1.0.1",
+    "react-spinners": "^0.5.3",
+    "ytdl-core": "^0.29.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/V1c1ss1tudes/U-Player.git"
+  },
+  "bugs": {
+    "url": "https://github.com/V1c1ss1tudes/U-Player/issues"
+  },
+  "homepage": "https://github.com/V1c1ss1tudes/U-Player#readme",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

@@ -1,0 +1,126 @@
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-areas: 
+    'left_upper right_upper right_upper right_upper right_upper right_upper'
+    'left_upper right_upper right_upper right_upper right_upper right_upper'
+    'left_upper right_upper right_upper right_upper right_upper right_upper'
+    'left_upper right_upper right_upper right_upper right_upper right_upper'
+    'left_upper right_upper right_upper right_upper right_upper right_upper'
+    'left_upper right_upper right_upper right_upper right_upper right_upper'
+    'left_upper right_upper right_upper right_upper right_upper right_upper'
+    'left_upper right_upper right_upper right_upper right_upper right_upper'
+    'left_upper right_upper right_upper right_upper right_upper right_upper'
+    'lower lower lower lower lower lower';
+
+}
+
+/* left upper portion of the app interface */
+.column-of-play-list {
+  grid-area: left_upper;
+  background-color: #EFEFEF;
+  position: fixed;
+  left: 0px;
+  z-index: 1;
+  margin-bottom: 10vh;
+  width: 16.67vw;
+  height: 90vh;
+}
+
+.my-music {
+  display: flex;
+  width: 10vw;
+  justify-content: center;
+}
+
+/* right upper portion of the app interface, not position fixed */
+.play-list {
+  
+  grid-area: right_upper;
+  margin-bottom: 10vh;
+  margin-left: 14vw;
+  margin-top: 6vh;
+}
+
+.name-of-play-list{
+  margin-top: 0vw;
+  position: fixed;
+  background-color: white;
+  width: 83.33vw;
+  right: 0px;
+  margin-left: 10vw;
+}
+
+.information-of-play-list{
+
+  margin-top: 10vh;
+
+}
+
+/* lower portion of the app interface */
+.player-app {
+  grid-area: lower;
+  grid-template-areas: 'search';
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  height: 10vh;
+  width: 100vw;
+  z-index: 3;
+  background-color: white;
+}
+
+/* Audio player in player portion*/
+
+.player {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-evenly;
+  height: 10vh;
+  width: 100vw;
+  bottom: 0px;
+}
+
+.song-name-and-slide-bar{ 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  
+}
+
+.track-artist {
+
+  font-family: 'Times New Roman';
+
+}
+
+.duration {
+  width: 70vw;
+}
+
+
+.controller-interface { /* This is the three buttons */
+  display: flex;
+  justify-content: space-evenly;
+  width: 200px;
+  align-items: baseline; /* This is for meet in the middle for the play,prev,next buttons */
+  
+}
+
+.spin-image {
+  width: 10vh;
+  height: 10vh;
+  border-radius: 50%;
+  animation: spin infinite 20s linear;
+  pointer-events: none;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
