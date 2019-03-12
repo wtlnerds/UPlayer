@@ -89,7 +89,7 @@ class Player extends Component {
             <p>{this.state.track.name} -  {this.state.track.artist}</p>
           </div>
           <div className="duration">
-            {this.state.position.toFixed(0)} - {this.state.duration.toFixed(0)}
+            {parseInt(this.state.position).toString(2)} - {parseInt(this.state.duration).toString(2)}
             <Slider
               min={0}
               max={this.state.duration}
