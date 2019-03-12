@@ -85,17 +85,21 @@ class Player extends Component {
 
         <div className="player">
           <img className="spin-image" width="64" height="64" src={this.state.track.avatar} alt="track avatar"/>
-          <div className="track-artist">
-            <p>{this.state.track.name} -  {this.state.track.artist}</p>
-          </div>
-          <div className="duration">
-            {parseInt(this.state.position).toString(2)} - {parseInt(this.state.duration).toString(2)}
-            <Slider
-              min={0}
-              max={this.state.duration}
-              step={1}
-              value={this.state.position}
-            />
+          <div className= "song-name-and-slide-bar">
+            <div className="track-artist">
+              <p>{this.state.track.name} -  {this.state.track.artist}</p>
+            </div>
+            <div className="duration-alter">
+                <p>{this.state.position.toFixed(0)} / {this.state.duration.toFixed(0)}</p>
+            </div>
+            <div className="duration">
+              <Slider
+                min={0}
+                max={this.state.duration}
+                step={1}
+                value={this.state.position}
+              />
+            </div>
           </div>
           <ControlInterface
             onPlay={() => this.play()}
@@ -108,7 +112,7 @@ class Player extends Component {
       )
     } else {
       return (
-        <div className="player">
+        <div className="player-alter">
           <div> <h1>Nothing is loaded!</h1></div>
           <ControlInterface
             onPlay={() => this.play()}

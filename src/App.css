@@ -39,10 +39,12 @@
 .play-list {
   
   grid-area: right_upper;
-  margin-bottom: 10vh;
-  margin-left: 14vw;
+  width: 83.34vw;
+  height:100vh;
+  margin-left: 16.67vw;
   margin-top: 6vh;
 }
+
 
 .name-of-play-list{
   margin-top: 0vw;
@@ -83,16 +85,34 @@
   bottom: 0px;
 }
 
-.song-name-and-slide-bar{ 
+/* nothing is loaded */
+.player-alter {
+
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;  
+  align-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+
+}
+
+.song-name-and-slide-bar{
+  padding-left: 3vw; 
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;  
+  justify-content: space-between;
 }
 
 .track-artist {
 
   font-family: 'Times New Roman';
 
+}
+
+.duration-alter {
+  padding-left: 50px;
+  padding-top: 3px;
 }
 
 .duration {
@@ -103,7 +123,7 @@
 .controller-interface { /* This is the three buttons */
   display: flex;
   justify-content: space-evenly;
-  width: 200px;
+  width: 30vw;
   align-items: baseline; /* This is for meet in the middle for the play,prev,next buttons */
   
 }
