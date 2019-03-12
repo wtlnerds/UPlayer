@@ -67,6 +67,12 @@ class Player extends Component {
     this.setState({playerStatus: Audio.status().PAUSED})
   }
 
+  parseTime(time) {
+    const minute = Math.floor(time / 60)
+    const seconds = time - minute * 60
+    return minute + ":" + seconds
+  }
+
   render() {
     let shouldLoadPlayer = true
     switch(this.state.playerStatus){
@@ -90,7 +96,7 @@ class Player extends Component {
               <p>{this.state.track.name} -  {this.state.track.artist}</p>
             </div>
             <div className="duration-alter">
-                <p>{this.state.position.toFixed(0)} / {this.state.duration.toFixed(0)}</p>
+                <p>{this.parseTime(parseInt(this.state.position.toFixed(0)))} / {this.parseTime(parseInt(this.state.duration.toFixed(0)))}</p>
             </div>
             <div className="duration">
               <Slider
