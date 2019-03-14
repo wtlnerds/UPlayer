@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import LoadingOverlay from 'react-loading-overlay';
 import ScaleLoader from 'react-spinners/ScaleLoader';
-import FSModule from '../../utils/file_system';
+
 import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 
@@ -74,16 +74,16 @@ class PlayListContent extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {isLoading: props.loading}
-        FSModule.loadTrackList().then((res) => {
-            this.setState({tracks: res})
-        })
+        this.state = {
+          isLoading: props.loading,
+          tracks: props.tracks
+        }
     }
 
     state = {
-        selectedIndex: 0,
+     selectedIndex: 0,
     };
-
+    
     handleListItemClick = (event, index, name) => {
         this.setState({ selectedIndex: index })
         this.props.loadTrack(createData(name, '米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师', 1, index))
@@ -91,7 +91,10 @@ class PlayListContent extends Component {
 
     componentDidUpdate(prevProps){
         if(this.props.loading !== prevProps.loading){
-            this.setState({isLoading: this.props.loading})
+          this.setState({isLoading: this.props.loading})
+        }
+        if(this.props.tracks !== prevProps.tracks){
+          this.setState({tracks: this.props.tracks})
         }
     }
 
@@ -126,7 +129,7 @@ class PlayListContent extends Component {
                                     {rows.map(row => (
                                         <TableRow
                                             className={classes.head}
-                                            hover='true'                                 
+                                            hover={true}                              
                                             key={row.id}
                                             selected={this.state.selectedIndex === row.id}
                                             onClick={event => this.handleListItemClick(event, row.id, row.name)}
