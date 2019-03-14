@@ -4,7 +4,7 @@ import ControlInterface from './control_interface'
 import FSModule from '../../utils/file_system'
 import Audio from '../../utils/audio'
 
-class Player extends Component {
+export default class Player extends Component {
   constructor(props) {
     super(props)
     // binder methods in child
@@ -28,7 +28,7 @@ class Player extends Component {
           Audio.getAudio().pause()
         }
         // then load entire new track
-        FSModule.loadTrack(this.props.track).then((res) => {
+        FSModule.loadTrack(this.props.track.name).then((res) => {
           Audio.reset()
           Audio.getAudio().init(new AudioContext(), res, () => this.onLoadFinished(this), (time) => this.onPlayingNotify(this, time))
         })
@@ -42,7 +42,8 @@ class Player extends Component {
       playerStatus: audio.status,
       duration: audio.duration(),
       track: {
-        name: this.props.track,
+        artist: this.props.track.uploadBy,
+        name: this.props.track.name,
         avatar: 'https://i.kym-cdn.com/photos/images/original/001/278/552/0c1'
       }
     })
@@ -74,6 +75,7 @@ class Player extends Component {
   }
 
   render() {
+
     let shouldLoadPlayer = true
     switch(this.state.playerStatus){
       case Audio.status().PAUSED:
@@ -93,12 +95,12 @@ class Player extends Component {
           <img className="spin-image" width="64" height="64" src={this.state.track.avatar} alt="track avatar"/>
           <div className= "song-name-and-slide-bar">
             <div className="track-artist">
-              <p>{this.state.track.name} -  {this.state.track.artist}</p>
+                <p className="track-animation">{this.state.track.name.substr(0, this.state.track.name.length-4)} - {this.state.track.artist}</p>
             </div>
             <div className="duration-alter">
                 <p>{this.parseTime(parseInt(this.state.position.toFixed(0)))} / {this.parseTime(parseInt(this.state.duration.toFixed(0)))}</p>
             </div>
-            <div className="duration">
+            <div className="slider">
               <Slider
                 min={0}
                 max={this.state.duration}
@@ -119,7 +121,7 @@ class Player extends Component {
     } else {
       return (
         <div className="player-alter">
-          <div> <h1>Nothing is loaded!</h1></div>
+          <div> <h1>Nothing is loaded! Choose a song first.</h1></div>
           <ControlInterface
             onPlay={() => this.play()}
             onPause={() => this.pause()}
@@ -132,5 +134,3 @@ class Player extends Component {
     }
   }
 }
-
-export default Player

@@ -13,9 +13,7 @@ import Icon_skip_next from './image/baseline-skip_next-24px.svg'; */
 /* Styling of the Fab, used as element in the render*/
 
 const MyButton = styled(Fab)({
-  background: 'linear-gradient(to right, #292E49, #536976)', /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
+  background: 'linear-gradient(to right, #292E49, #536976)',
   border: '50px',
   borderRadius: '50%',
   color: 'white',

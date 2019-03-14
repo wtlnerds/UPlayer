@@ -20,7 +20,6 @@ const styles = theme => ({
       elevation:'0dp',
     },
 
-
   });
 
 class PlayNavigator extends React.Component {
@@ -34,7 +33,7 @@ class PlayNavigator extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    
     return (
       <div className={classes.root}>
         <List component="nav">
@@ -59,6 +58,16 @@ class PlayNavigator extends React.Component {
             onClick={event => this.handleListItemClick(event, 1)}
           >
             <ListItemIcon>
+              <Icon>favorite</Icon>
+            </ListItemIcon>
+            <ListItemText primary="我的喜欢" />
+          </ListItem>
+          <ListItem
+            button
+            selected={this.state.selectedIndex === 2}
+            onClick={event => this.handleListItemClick(event, 2)}
+          >
+            <ListItemIcon>
                 <Icon>signal_cellular_alt</Icon>
             </ListItemIcon>
             <ListItemText primary="时下流行" />
@@ -73,15 +82,13 @@ class PlayNavigator extends React.Component {
         <List component="nav">
           <ListItem
             button
-            selected={this.state.selectedIndex === 2}
-            onClick={event => this.handleListItemClick(event, 2)}
+            selected={this.state.selectedIndex === 3}
+            onClick={event => this.handleListItemClick(event, 3)}
           >
             <ListItemIcon>
-                <Fab color="primary" aria-label="Add" size="small" className={classes.fab}>
-                    <Icon>add</Icon>
-                </Fab>
+                <Icon>playlist_add</Icon>
             </ListItemIcon>
-            <ListItemText primary="创建歌单" />
+            <ListItemText secondary="创建歌单" />
           </ListItem>
         </List>
       </div>

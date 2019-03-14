@@ -17,44 +17,22 @@ function createData(name, uploadBy, duration, id) {
 }
 
 const styles = {
-    head:{
-        '&:hover':{
-            '& $root_icon':{
-                opacity:1,
-            },
-        },
-    },
-    name_of_play_list:{
-        position: 'fixed',
-        backgroundColor: 'white',
-        width: '100vw',
-    },
-
-    information_of_play_list:{
-        marginTop: '10vh',
-    },
     root: {
         width: '35vw',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-start',
     },
     root_name: {
         width: '25vw',
+        paddingLeft: '3vw',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
     },
-    root_icon_parent: {
-        paddingLeft: '5vw',
-        display: 'flex',
-        alignContent:'flex-start',
-        justifyContent:'center',
-    },
     root_icon: {
-        opacity: 0,
-        paddingLeft:'1vw',
+        color: 'red',
+        fontsize: 'small',
     },
     root_uploadby:{
         width:'15vw',
@@ -70,7 +48,7 @@ const styles = {
       },
   };
 
-class PlayListContent extends Component {
+class MyFavorite extends Component {
 
     constructor(props) {
         super(props)
@@ -82,8 +60,8 @@ class PlayListContent extends Component {
 
     state = {
         selectedIndex: 0,
-    };
-
+      };
+    
     handleListItemClick = (event, index, name) => {
         this.setState({ selectedIndex: index })
         this.props.loadTrack(createData(name, '米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师', 1, index))
@@ -110,14 +88,14 @@ class PlayListContent extends Component {
             >
                 <Card elevation={0}>
                     <CardContent>
-                        <div className={classes.name_of_play_list} position="fixed">
-                            <h2>试听列表</h2>
+                        <div className="name-of-play-list" position="fixed">
+                            <h2>我的喜欢</h2>
                         </div>
-                        <div className={classes.information_of_play_list}>
+                        <div className="information-of-play-list">
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>歌曲</TableCell>
+                                        <TableCell align="inherit">歌曲</TableCell>
                                         <TableCell>上传者</TableCell>
                                         <TableCell>时长</TableCell>
                                     </TableRow>
@@ -133,12 +111,8 @@ class PlayListContent extends Component {
                                         >   
                                             <TableCell component="th" scope="row">
                                                 <div className={classes.root}>
+                                                    <Icon className={classes.root_icon}>favorite</Icon>
                                                     <p className={classes.root_name}>{row.name.substr(0,row.name.length-4)}</p>
-                                                    <div className={classes.root_icon_parent}>
-                                                        <Icon className={classes.root_icon}>play_arrow_border</Icon>
-                                                        <Icon className={classes.root_icon}>favorite_border</Icon>
-                                                        <Icon className={classes.root_icon}>format_list_bulleted</Icon>
-                                                    </div>
                                                 </div>
                                             </TableCell>
                                             <TableCell> 
@@ -160,4 +134,4 @@ class PlayListContent extends Component {
     }
 }
 
-export default withStyles(styles)(PlayListContent);
+export default withStyles(styles)(MyFavorite);
