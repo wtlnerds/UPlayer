@@ -11,7 +11,9 @@ const styles = theme => ({
   root: {
     width: '83.33%',
     postion: 'fixed',
-    backgroundColor: 'black',
+    // backgroundColor: 'black',
+    background: 'linear-gradient(to left, #414345, #232526)', /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     marginLeft:'16.67%',
   },
 
