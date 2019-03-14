@@ -14,6 +14,7 @@ export default class Player extends Component {
     // initialize states
     this.state = {
       playerStatus: Audio.status().INIT,
+      // we need this to refresh this component upon each tick
       position: 0,
       duration: 0,
       track: null
@@ -30,7 +31,13 @@ export default class Player extends Component {
         // then load entire new track
         FSModule.loadTrack(this.props.track.name).then((res) => {
           Audio.reset()
-          Audio.getAudio().init(new AudioContext(), res, () => this.onLoadFinished(this), (time) => this.onPlayingNotify(this, time))
+          Audio.getAudio().init(
+            new AudioContext(), 
+            res, 
+            () => this.onLoadFinished(this), 
+            (time) => this.onPlayingNotify(this, time),
+            () => this.onTrackChange(1)
+          )
         })
     }
   }
@@ -57,7 +64,13 @@ export default class Player extends Component {
   }
  
   onTrackChange(next) {
-    console.log(next)
+    if(next === 1){
+      this.props.next()
+    }
+
+    if(next === 0){
+      this.props.prev()
+    }
   }
 
   play() {
@@ -112,6 +125,7 @@ export default class Player extends Component {
           <ControlInterface
             onPlay={() => this.play()}
             onPause={() => this.pause()}
+            onTrackChange={(indicator) => this.onTrackChange(indicator)}
             playStatus={this.state.playerStatus === Audio.status().PLAYING}
             disabled={false}
           >

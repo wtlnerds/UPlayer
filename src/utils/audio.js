@@ -30,7 +30,8 @@ class Audio {
      * status
      * sourceBuffer: current song bytes array
      * playInterval: interval call back function
-     * onPlayingCallBack: passed in callback function per tick
+     * onPlaying: passed in callback function per tick
+     * onPlayingFinished: passed in callback function when song is finished
      */
     constructor(){
         this.PLAYER_STATUS = this.constructor.status()
@@ -41,11 +42,17 @@ class Audio {
         this.sourceBuffer = null
     }
 
-    init(audioCtx, audioFileBytes, onLoadFinished, onPlayingCallback){
+    init(
+      audioCtx, 
+      audioFileBytes, 
+      onLoadFinished, 
+      onPlaying,
+      onPlayingFinished
+    ){
         if(!audioFileBytes) return
         // console.log(audioFileBytes)
         let arrayBuffer = audioFileBytes.buffer
-        this.onPlayingCallback = onPlayingCallback
+        this.onPlaying = onPlaying
         this.context = audioCtx
         this.context.decodeAudioData(arrayBuffer, (buffer) => {
             this.sourceBuffer = buffer
@@ -70,7 +77,7 @@ class Audio {
         this.playInterval = setInterval(() => {
           if(this.position >= this.duration())  this.startedTime += this.duration()
           if(this.status === this.PLAYER_STATUS.PLAYING) this.position = this.context.currentTime - this.startedTime
-          this.onPlayingCallback(this.position)
+          this.onPlaying(this.position)
         }, 1000)
     }
 

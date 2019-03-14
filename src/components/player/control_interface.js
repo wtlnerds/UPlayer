@@ -43,10 +43,10 @@ class ControlInterface extends Component {
   render() {
     return (
       <div className="controller-interface">
-        <MyButton color = "primary" size = "small" onClick={() => this.onTrackChange('prev')}><Icon>skip_previous</Icon></MyButton>
+        <MyButton color = "primary" size = "small" onClick={()=>this.props.onTrackChange(0)}><Icon>skip_previous</Icon></MyButton>
         {!this.props.playStatus && this.control('Play', this.props.onPlay)}
         {this.props.playStatus && this.control('Pause', this.props.onPause)}
-        <MyButton color = "primary" size = "small" onClick={() => this.onTrackChange('next')}> <Icon>skip_next</Icon></MyButton>        
+        <MyButton color = "primary" size = "small" onClick={()=>this.props.onTrackChange(1)}> <Icon>skip_next</Icon></MyButton>
       </div>
     )
   }
