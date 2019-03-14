@@ -37,21 +37,21 @@ class App extends Component {
   }
 
   next(){
-    this.loadTrack(this.getNextSong())
+    this.loadTrack({name: this.getNextSong()})
   }
 
   prev(){
-    this.loadTrack(this.getPrevSong())
+    this.loadTrack({name: this.getPrevSong()})
   }
 
   getNextSong(){
-    const currentTrack = this.state.track
+    const currentTrack = this.state.track.name
     const nextIndex = this.state.trackNameList.indexOf(currentTrack) + 1
     return nextIndex === this.state.trackNameList.length ? this.state.trackNameList[0] : this.state.trackNameList[nextIndex]
   }
 
   getPrevSong(){
-    const currentTrack = this.state.track
+    const currentTrack = this.state.track.name
     const prevIndex = this.state.trackNameList.indexOf(currentTrack) - 1
     return prevIndex === -1 ? this.state.trackNameList[this.state.trackNameList.length - 1] : this.state.trackNameList[prevIndex]
   }

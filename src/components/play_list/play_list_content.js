@@ -129,7 +129,7 @@ class PlayListContent extends Component {
                                     {rows.map(row => (
                                         <TableRow
                                             className={classes.head}
-                                            hover='true'                                 
+                                            hover={true}                              
                                             key={row.id}
                                             selected={this.state.selectedIndex === row.id}
                                             onClick={event => this.handleListItemClick(event, row.id, row.name)}
