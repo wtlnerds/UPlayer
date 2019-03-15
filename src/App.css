@@ -32,17 +32,16 @@
 
 /* right upper portion of the app interface, not position fixed */
 .play-list {
-  
   grid-area: right_upper;
   width: 83.34vw;
-  height:100vh;
   margin-left: 16.67vw;
-  margin-top: 6vh;
-  margin-bottom:10vh;
-
 }
 
-
+.play-list-content {
+  height: calc(90vh - 64px);
+  margin-top: 64px;
+  overflow: scroll;
+}
 /* lower portion of the app interface */
 .player-app {
   grid-area: lower;
