@@ -53,6 +53,7 @@ class Audio {
         // console.log(audioFileBytes)
         let arrayBuffer = audioFileBytes.buffer
         this.onPlaying = onPlaying
+        this.onPlayingFinished = onPlayingFinished
         this.context = audioCtx
         this.context.decodeAudioData(arrayBuffer, (buffer) => {
             this.sourceBuffer = buffer
@@ -75,7 +76,11 @@ class Audio {
         this.status = this.PLAYER_STATUS.PLAYING
         // timer
         this.playInterval = setInterval(() => {
-          if(this.position >= this.duration())  this.startedTime += this.duration()
+          if(this.position >= this.duration() - 1){
+            clearInterval(this.playInterval)
+            this.onPlayingFinished()
+            return
+          }
           if(this.status === this.PLAYER_STATUS.PLAYING) this.position = this.context.currentTime - this.startedTime
           this.onPlaying(this.position)
         }, 1000)
