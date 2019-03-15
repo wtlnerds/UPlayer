@@ -25,7 +25,7 @@ class App extends Component {
     }
     FSModule.loadTrackList().then((res) => {
       this.setState({
-        trackNameList: res.map((v, i) => {
+        tracks: res.map((v, i) => {
           return this.createData(v, '米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师', 1, i, false)
         })
       })
@@ -53,15 +53,15 @@ class App extends Component {
   }
 
   getNextSong(){
-    const currentTrack = this.state.track.name
-    const nextIndex = this.state.trackNameList.indexOf(currentTrack) + 1
-    return nextIndex === this.state.trackNameList.length ? this.state.trackNameList[0] : this.state.trackNameList[nextIndex]
+    const currentTrack = this.state.track
+    const nextIndex = this.state.tracks.indexOf(currentTrack) + 1
+    return nextIndex === this.state.tracks.length ? this.state.tracks[0] : this.state.tracks[nextIndex]
   }
 
   getPrevSong(){
-    const currentTrack = this.state.track.name
-    const prevIndex = this.state.trackNameList.indexOf(currentTrack) - 1
-    return prevIndex === -1 ? this.state.trackNameList[this.state.trackNameList.length - 1] : this.state.trackNameList[prevIndex]
+    const currentTrack = this.state.track
+    const prevIndex = this.state.tracks.indexOf(currentTrack) - 1
+    return prevIndex === -1 ? this.state.tracks[this.state.tracks.length - 1] : this.state.tracks[prevIndex]
   }
   
   render() {
@@ -89,7 +89,7 @@ class App extends Component {
             <div className="play-list-content">
               <PlayListContent 
                 loadTrack={this.loadTrack} 
-                tracks={this.state.trackNameList}
+                tracks={this.state.tracks}
               ></PlayListContent>
             </div>
           </div>
