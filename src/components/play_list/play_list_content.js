@@ -121,15 +121,25 @@ class PlayListContent extends Component {
                                       hover={true}                              
                                       key={row.id}
                                       selected={this.state.selectedIndex === row.id}
-                                      onClick={event => this.handleListItemClick(event, row.id, row.name)}
+                                      onClick={event => this.handleListItemClick(event, row)}
                                   >   
                                       <TableCell component="th" scope="row">
                                           <div className={classes.root}>
                                               <p className={classes.root_name}>{row.name.substr(0,row.name.length-4)}</p>
                                               <div className={classes.root_icon_parent}>
-                                                  <Icon className={classes.root_icon}>play_arrow_border</Icon>
-                                                  <Icon className={classes.root_icon}>favorite_border</Icon>
-                                                  <Icon className={classes.root_icon}>format_list_bulleted</Icon>
+                                                  <Icon className={classes.root_icon_not_liked}>play_arrow_border</Icon>
+
+                                                  {!row.liked &&
+                                                  <Icon className={classes.root_icon_not_liked}
+                                                      onClick={event => this.handleLikeClick(event, row.id)}
+                                                  >favorite_border
+                                                  </Icon>}
+
+                                                  {row.liked && <Icon className={classes.root_icon_liked}
+                                                      onClick={event => this.handleLikeClick(event, row.id)}
+                                                  >favorite
+                                                  </Icon>}
+                                                  <Icon className={classes.root_icon_not_liked}>format_list_bulleted</Icon>
                                               </div>
                                           </div>
                                       </TableCell>
