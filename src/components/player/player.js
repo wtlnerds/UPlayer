@@ -82,9 +82,11 @@ export default class Player extends Component {
   }
 
   parseTime(time) {
-    const minute = Math.floor(time / 60)
-    const seconds = time - minute * 60
-    return minute + ":" + seconds
+    const minutes = Math.floor(time / 60)
+    const seconds = time - minutes * 60
+    const minutesPart = minutes < 10 ? '0' + minutes : minutes
+    const secondsPart = seconds < 10 ? '0' + seconds : seconds
+    return minutesPart + ":" + secondsPart
   }
 
   render() {
