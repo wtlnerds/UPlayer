@@ -23,10 +23,16 @@ class App extends Component {
     }
     FSModule.loadTrackList().then((res) => {
       this.setState({
-        trackNameList: res
+        trackNameList: res.map((v, i) => {
+          return this.createData(v, '米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师', 1, i, false)
+        })
       })
     })
   }
+
+  createData(name, uploadBy, duration, id, liked) {  
+    return { name, uploadBy, duration, id, liked};
+  }   
 
   loadTrack(track){
     this.setState({track: track, loading: true})

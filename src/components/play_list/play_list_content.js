@@ -8,18 +8,17 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import LoadingOverlay from 'react-loading-overlay';
 import ScaleLoader from 'react-spinners/ScaleLoader';
-
 import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
-
-function createData(name, uploadBy, duration, id) {  
-  return { name, uploadBy, duration, id };
-}
+// mport Fab from '@material-ui/core/Fab'
 
 const styles = {
     head:{
         '&:hover':{
-            '& $root_icon':{
+            '& $root_icon_not_liked':{
+                opacity:1,
+            },
+            '& $root_icon_liked':{
                 opacity:1,
             },
         },
@@ -52,7 +51,11 @@ const styles = {
         alignContent:'flex-start',
         justifyContent:'center',
     },
-    root_icon: {
+    root_icon_not_liked: {
+        opacity: 0,
+        paddingLeft:'1vw',
+    },
+    root_icon_liked:{
         opacity: 0,
         paddingLeft:'1vw',
     },
@@ -73,21 +76,24 @@ const styles = {
 class PlayListContent extends Component {
 
     constructor(props) {
-        super(props)
+        super(props)        
         this.state = {
           isLoading: props.loading,
           tracks: props.tracks
         }
     }
-
-    state = {
-     selectedIndex: 0,
-    };
     
-    handleListItemClick = (event, index, name) => {
-        this.setState({ selectedIndex: index })
-        this.props.loadTrack(createData(name, '米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师', 1, index))
+    handleListItemClick = (event, track) => {
+        this.setState({ selectedIndex: track.index })
+        this.props.loadTrack(track)
     }
+    
+    handleLikeClick = (event, id) => {
+        event.stopPropagation();
+        this.state.tracks[id].liked = !this.state.tracks[id].liked
+        this.setState({tracks: this.state.tracks});
+        console.log(this.state.tracks)
+    } 
 
     componentDidUpdate(prevProps){
         if(this.props.loading !== prevProps.loading){
@@ -103,9 +109,7 @@ class PlayListContent extends Component {
         const { classes } = this.props;
 
         if(!this.state.tracks) return (<div></div>) 
-        const rows = this.state.tracks.map((element, index) => {
-            return createData(element, '米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师', 1, index)
-        })         
+        const rows = this.state.tracks
         return(
             <LoadingOverlay
                 active={this.state.isLoading}
@@ -132,15 +136,25 @@ class PlayListContent extends Component {
                                             hover={true}                              
                                             key={row.id}
                                             selected={this.state.selectedIndex === row.id}
-                                            onClick={event => this.handleListItemClick(event, row.id, row.name)}
+                                            onClick={event => this.handleListItemClick(event, row)}
                                         >   
                                             <TableCell component="th" scope="row">
                                                 <div className={classes.root}>
                                                     <p className={classes.root_name}>{row.name.substr(0,row.name.length-4)}</p>
                                                     <div className={classes.root_icon_parent}>
-                                                        <Icon className={classes.root_icon}>play_arrow_border</Icon>
-                                                        <Icon className={classes.root_icon}>favorite_border</Icon>
-                                                        <Icon className={classes.root_icon}>format_list_bulleted</Icon>
+                                                        <Icon className={classes.root_icon_not_liked}>play_arrow_border</Icon>
+
+                                                        {!row.liked &&
+                                                        <Icon className={classes.root_icon_not_liked}
+                                                            onClick={event => this.handleLikeClick(event, row.id)}
+                                                        >favorite_border
+                                                        </Icon>}
+
+                                                        {row.liked && <Icon className={classes.root_icon_liked}
+                                                            onClick={event => this.handleLikeClick(event, row.id)}
+                                                        >favorite
+                                                        </Icon>}
+                                                        <Icon className={classes.root_icon_not_liked}>format_list_bulleted</Icon>
                                                     </div>
                                                 </div>
                                             </TableCell>

@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 
 function createData(name, uploadBy, duration, id) {  
-  return { name, uploadBy, duration, id };
+  return { name, uploadBy, duration, id};
 }
 
 const styles = {
@@ -104,7 +104,7 @@ class MyFavorite extends Component {
                                     {rows.map(row => (
                                         <TableRow
                                             className={classes.head}
-                                            hover='true'                                 
+                                            hover={true}                                
                                             key={row.id}
                                             selected={this.state.selectedIndex === row.id}
                                             onClick={event => this.handleListItemClick(event, row.id, row.name)}
