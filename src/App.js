@@ -45,11 +45,11 @@ class App extends Component {
   }
 
   next(){
-    this.loadTrack({name: this.getNextSong()})
+    this.loadTrack(this.getNextSong())
   }
 
   prev(){
-    this.loadTrack({name: this.getPrevSong()})
+    this.loadTrack(this.getPrevSong())
   }
 
   getNextSong(){
