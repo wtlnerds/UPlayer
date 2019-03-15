@@ -12,8 +12,9 @@ class Audio {
 
     static reset(){
       // need to clear the interval
+      if(this.currentAudio.audioBufferSourceNode) this.currentAudio.audioBufferSourceNode.stop()
       if(this.currentAudio)clearInterval(this.currentAudio.playInterval)
-      this.currentAudio = null
+      delete this.currentAudio
     }
 
     static getAudio(){

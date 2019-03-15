@@ -4,6 +4,8 @@ import './App.css';
 import PrimarySearchAppBar from './components/play_list/primary_appsearch_bar.js'
 import PlayListContent from './components/play_list/play_list_content.js'
 import PlayNavigator from './components/column_of_play_list/play_navigator.js'
+import LoadingOverlay from 'react-loading-overlay';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 // import MyFavorite from './components/play_list/my_favorite.js'
 // import SearchResult from './components/play_list/search_result.js';
 
@@ -64,31 +66,35 @@ class App extends Component {
   
   render() {
     return (
-      <div className="app">
-        <div className = "player-app">
-          <Player 
-            track={this.state.track} 
-            next={this.next}
-            prev={this.prev}
-            onLoadFinished={this.onLoadFinished}>
-          </Player> 
-        </div> 
-        <div className = "column-of-play-list" >
-          <PlayNavigator> </PlayNavigator>
-        </div> 
-        <div className = "play-list">
-          <div className="primary-appsearch-bar">
-              <PrimarySearchAppBar></PrimarySearchAppBar>
+      <LoadingOverlay 
+        active={this.state.loading} 
+        spinner={<ScaleLoader sizeUnit={'px'} size={300} color={'#EFEFEF'} />}
+      >
+        <div className="app">
+          <div className = "player-app">
+            <Player 
+              track={this.state.track} 
+              next={this.next}
+              prev={this.prev}
+              onLoadFinished={this.onLoadFinished}>
+            </Player> 
           </div> 
-          <div className="play-list-content">
-            <PlayListContent 
-              loadTrack={this.loadTrack} 
-              loading={this.state.loading}
-              tracks={this.state.trackNameList}
-            ></PlayListContent>
+          <div className = "column-of-play-list" >
+            <PlayNavigator> </PlayNavigator>
+          </div> 
+          <div className = "play-list">
+            <div className="primary-appsearch-bar">
+                <PrimarySearchAppBar></PrimarySearchAppBar>
+            </div> 
+            <div className="play-list-content">
+              <PlayListContent 
+                loadTrack={this.loadTrack} 
+                tracks={this.state.trackNameList}
+              ></PlayListContent>
+            </div>
           </div>
         </div>
-      </div>
+      </LoadingOverlay>
     );
   }
 }

@@ -24,10 +24,8 @@ export default class Player extends Component {
   componentDidUpdate(prevProps){
     if(this.props.track !== prevProps.track){
         // first we need to stop current playing audio
-        if(this.state.playerStatus === Audio.status().PLAYING){
-          //　停一下.jpg
-          Audio.getAudio().pause()
-        }
+        //　停一下.jpg
+        Audio.getAudio().pause()
         // then load entire new track
         FSModule.loadTrack(this.props.track.name).then((res) => {
           Audio.reset()
