@@ -7,6 +7,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 // import Fab from '@material-ui/core/Fab';
+import TestSearch from '../play_list/test_search'
 
 const styles = theme => ({
 
@@ -91,6 +92,7 @@ class PlayNavigator extends React.Component {
             <ListItemText secondary="创建歌单" />
           </ListItem>
         </List>
+        <TestSearch></TestSearch>
       </div>
     );
   }

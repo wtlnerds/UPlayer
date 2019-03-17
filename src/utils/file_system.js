@@ -19,5 +19,11 @@ module.exports = {
       })
       ipcRenderer.send('fetch-track-byte', track)
     });
+  },
+
+  download: (url) => {
+    return new Promise(resolve => {
+      ipcRenderer.send('download-audio', url)
+    })
   }
 }

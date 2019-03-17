@@ -3,6 +3,7 @@ const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
 const fs = require('fs')
+const ytdl = require('ytdl-core')
 
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -70,4 +71,11 @@ ipcMain.on('fetch-track-list', (event, arg) => {
   fs.readdir(trackLocation, (err, items) => {
     event.sender.send('receive-track-list', items)
   })
+})
+
+ipcMain.on('download-audio', (event, arg) => {
+
+  ytdl(arg, { filter: "audioonly" })
+  .pipe(fs.createWriteStream("./tmp/" + arg.substr(arg.length-11) + ".mp3"))
+
 })
