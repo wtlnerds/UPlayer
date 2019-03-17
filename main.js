@@ -69,7 +69,12 @@ ipcMain.on('fetch-track-byte', (event, arg) => {
 ipcMain.on('fetch-track-list', (event, arg) => {
   const trackLocation = path.join(__dirname, '/tmp')
   fs.readdir(trackLocation, (err, items) => {
-    event.sender.send('receive-track-list', items)
+    event.sender.send(
+      'receive-track-list', 
+      items.filter((track) => {
+        return track.length >= 4 && track.substr(track.length - 4) === '.mp3'
+      })
+    )
   })
 })
 
