@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import Player from './components/player/player.js'
 import './App.css';
 import PrimarySearchAppBar from './components/play_list/primary_appsearch_bar.js'
-import PlayListContent from './components/play_list/play_list_content.js'
+// import PlayListContent from './components/play_list/play_list_content.js'
 import PlayNavigator from './components/column_of_play_list/play_navigator.js'
 import LoadingOverlay from 'react-loading-overlay';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 // import MyFavorite from './components/play_list/my_favorite.js'
-// import SearchResult from './components/play_list/search_result.js';
+import SearchResult from './components/play_list/search_result.js';
 
 import FSModule from './utils/file_system';
 
@@ -87,10 +87,13 @@ class App extends Component {
                 <PrimarySearchAppBar></PrimarySearchAppBar>
             </div> 
             <div className="play-list-content">
+              {/*
               <PlayListContent 
                 loadTrack={this.loadTrack} 
                 tracks={this.state.tracks}
               ></PlayListContent>
+              */}
+              <SearchResult> </SearchResult>
             </div>
           </div>
         </div>
