@@ -6,7 +6,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-// import Fab from '@material-ui/core/Fab';
 import TestSearch from '../play_list/test_search'
 
 const styles = theme => ({
@@ -24,9 +23,16 @@ const styles = theme => ({
   });
 
 class PlayNavigator extends React.Component {
-  state = {
-    selectedIndex: 0,
-  };
+  constructor(props){
+    super(props)
+
+    this.handleNavigation = this.props.handleNavigation
+
+    this.state = {
+      selectedIndex: 0,
+    };
+    
+  }
 
   handleListItemClick = (event, index) => {
     this.setState({ selectedIndex: index });
@@ -34,7 +40,7 @@ class PlayNavigator extends React.Component {
 
   render() {
     const { classes } = this.props;
-    
+
     return (
       <div className={classes.root}>
         <List component="nav">
@@ -45,8 +51,7 @@ class PlayNavigator extends React.Component {
         <List component="nav">
           <ListItem
             button
-            selected={this.state.selectedIndex === 0}
-            onClick={event => this.handleListItemClick(event, 0)}
+            onClick={() => this.handleNavigation(0)}
           >
             <ListItemIcon>
               <Icon>library_music</Icon>
@@ -55,18 +60,16 @@ class PlayNavigator extends React.Component {
           </ListItem>
           <ListItem
             button
-            selected={this.state.selectedIndex === 1}
-            onClick={event => this.handleListItemClick(event, 1)}
+            onClick={() => this.handleNavigation(1)}
           >
             <ListItemIcon>
               <Icon>favorite</Icon>
             </ListItemIcon>
-            <ListItemText primary="我的喜欢" />
+            <ListItemText primary="我的最爱" />
           </ListItem>
           <ListItem
             button
-            selected={this.state.selectedIndex === 2}
-            onClick={event => this.handleListItemClick(event, 2)}
+            onClick={() => this.handleNavigation(2)}
           >
             <ListItemIcon>
                 <Icon>signal_cellular_alt</Icon>
@@ -82,9 +85,6 @@ class PlayNavigator extends React.Component {
         </List>
         <List component="nav">
           <ListItem
-            button
-            selected={this.state.selectedIndex === 3}
-            onClick={event => this.handleListItemClick(event, 3)}
           >
             <ListItemIcon>
                 <Icon>playlist_add</Icon>

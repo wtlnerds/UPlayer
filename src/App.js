@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import Player from './components/player/player.js'
 import './App.css';
 import PrimarySearchAppBar from './components/play_list/primary_appsearch_bar.js'
-// import PlayListContent from './components/play_list/play_list_content.js'
+import PlayListContent from './components/play_list/play_list_content.js'
 import PlayNavigator from './components/column_of_play_list/play_navigator.js'
 import LoadingOverlay from 'react-loading-overlay';
 import ScaleLoader from 'react-spinners/ScaleLoader';
-// import MyFavorite from './components/play_list/my_favorite.js'
+import MyFavorite from './components/play_list/my_favorite.js'
 import SearchResult from './components/play_list/search_result.js';
 
 import FSModule from './utils/file_system';
@@ -19,9 +19,13 @@ class App extends Component {
     this.onLoadFinished = this.onLoadFinished.bind(this)
     this.next = this.next.bind(this)
     this.prev = this.prev.bind(this)
+
+    this.handleNavigation = this.handleNavigation.bind(this) // Changes on download branch
+ 
     this.state = {
       track: null,
-      loading: false
+      loading: false,
+      navigation: 0,
     }
     FSModule.loadTrackList().then((res) => {
       this.setState({
@@ -30,6 +34,13 @@ class App extends Component {
         })
       })
     })
+  }
+
+  // Changes on downlaod branch
+  handleNavigation(index) {
+    this.setState({
+        navigation:index,
+    });
   }
 
   createData(name, uploadBy, duration, id, liked) {  
@@ -64,7 +75,34 @@ class App extends Component {
     return prevIndex === -1 ? this.state.tracks[this.state.tracks.length - 1] : this.state.tracks[prevIndex]
   }
   
+  // return play_list based on inputs from the navigation
+  getPage(index){
+    switch (index) {
+      case 0:
+        return (<PlayListContent
+                loadTrack={this.loadTrack}
+                tracks = {this.state.tracks}>
+                </PlayListContent>)
+      case 1:
+        return (<MyFavorite
+                loadTrack={this.loadTrack}
+                tracks = {this.state.tracks}>
+                 </MyFavorite>)
+      case 2:
+      // 时下流行 case: This may need to be changed, change to taking specific youtube url
+        return (<SearchResult> </SearchResult>)
+      default:
+        return (<PlayListContent
+                loadTrack={this.loadTrack}
+                tracks = {this.state.tracks}>
+                </PlayListContent>)
+    }
+  }
+
   render() {
+
+    let handleNavigation = this.handleNavigation;
+
     return (
       <LoadingOverlay 
         active={this.state.loading} 
@@ -80,20 +118,14 @@ class App extends Component {
             </Player> 
           </div> 
           <div className = "column-of-play-list" >
-            <PlayNavigator> </PlayNavigator>
+            <PlayNavigator handleNavigation = {handleNavigation}> </PlayNavigator>
           </div> 
           <div className = "play-list">
             <div className="primary-appsearch-bar">
                 <PrimarySearchAppBar></PrimarySearchAppBar>
             </div> 
             <div className="play-list-content">
-              {/*
-              <PlayListContent 
-                loadTrack={this.loadTrack} 
-                tracks={this.state.tracks}
-              ></PlayListContent>
-              */}
-              <SearchResult> </SearchResult>
+              {this.getPage(this.state.navigation)}
             </div>
           </div>
         </div>
