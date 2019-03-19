@@ -4,9 +4,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import PropTypes from 'prop-types';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
+import PopoutVideo from './popout_video';
+// import {Popout} from 'react-popout-component';
 
 const styles = ({
     root: {
@@ -76,16 +77,43 @@ const styles = ({
 
 class SearchResult extends Component{
 
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            showWindowPortal: false,
+        };
+        
+        this.toggleWindowPortal = this.toggleWindowPortal.bind(this);
+        this.closeWindowPortal = this.closeWindowPortal.bind(this);
+      }
+      
+      toggleWindowPortal() {
+        this.setState(state => ({
+          ...state,
+          showWindowPortal: !state.showWindowPortal,
+        }));
+      }
+
+      componentDidMount() {
+        window.addEventListener('beforeunload', () => {
+          this.closeWindowPortal();
+        });}
+
+      closeWindowPortal() {
+        this.setState({ showWindowPortal: false })
+      }
+    
     render(){
         const data = [1,1,1,1,1,1,1,1,1,1] // testing, need to delete later
-        const { classes } = this.props;
+
+        const {classes} = this.props;
 
         return(
         <div className={classes.root}>
             <Typography className={classes.header} component="h5" variant="h5">
             搜索“xxx”返回的结果
             </Typography>
-
                 <div>
                     {/* Testing, need to delete this later*/}
                     {data.map(element => (
@@ -119,10 +147,23 @@ class SearchResult extends Component{
                                             2019年4月10日(水)発売、予約受付中
                                             http://yorushika.com
                                         </Typography>
-                                        <Button variant="contained" color="secondary" className={classes.watch}>
+
+                                        <Button
+                                        className={classes.watch} 
+                                        variant="contained" 
+                                        color="secondary"
+                                        onClick={this.toggleWindowPortal}>
                                         Watch
                                         <Icon className={classes.watchicon}>ondemand_video</Icon>
-                                        </Button>
+                                        </Button> 
+
+                                        {this.state.showWindowPortal && (
+                                            <PopoutVideo>
+                                                <div>
+                                                </div>
+                                            </PopoutVideo>
+                                        )}
+
                                         <Button variant="contained" color="primary" className={classes.download}>
                                         download
                                         <Icon className={classes.downloadicon}>get_app</Icon>
@@ -137,10 +178,5 @@ class SearchResult extends Component{
         )
     }
 }
-
-SearchResult.propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-  };
 
 export default withStyles(styles)(SearchResult);
