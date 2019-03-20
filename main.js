@@ -4,11 +4,15 @@ const path = require('path')
 const url = require('url')
 const fs = require('fs')
 const ytdl = require('ytdl-core')
+const youtubeSearch = require('youtube-search')
 
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+// slice the EOF character here
+const secret = fs.readFileSync(path.join(__dirname, 'secret_key'), 'utf8').slice(0, -1)
+console.log(secret)
 
 function createWindow () {
   // Create the browser window.
@@ -32,7 +36,7 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
-}
+  }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -59,6 +63,10 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
+// trim out slashes in strings
+function trim(str){
+  return str.replace(new RegExp('/', 'g'), '');
+}
 
 ipcMain.on('fetch-track-byte', (event, arg) => {
   //  console.log(path.join(__dirname, '/tmp', arg))
@@ -79,8 +87,25 @@ ipcMain.on('fetch-track-list', (event, arg) => {
 })
 
 ipcMain.on('download-audio', (event, arg) => {
-
-  ytdl(arg, { filter: "audioonly" })
-  .pipe(fs.createWriteStream("./tmp/" + arg.substr(arg.length-11) + ".mp3"))
-
+  const url = arg.url
+  if(!url) return
+  const name = arg.name ? arg.name : url.substr(url.length-11)
+  ytdl(url, { filter: "audioonly" })
+    .pipe(fs.createWriteStream(path.join(__dirname, "./tmp/", trim(name) + ".mp3")))
 })
+
+ipcMain.on('youtube-search', (event, arg) => {
+  const options = {
+    maxResults: 10,
+    key: secret
+  }
+  
+  youtubeSearch(arg, options, (err, result) => {
+    if(err) return console.log(err)
+    event.sender.send(
+      'youtube-search-result',
+      result
+    )
+  })
+})
+

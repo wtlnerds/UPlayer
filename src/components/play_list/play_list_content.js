@@ -111,7 +111,6 @@ class PlayListContent extends Component {
                               <TableRow>
                                   <TableCell>歌曲</TableCell>
                                   <TableCell>上传者</TableCell>
-                                  <TableCell>时长</TableCell>
                               </TableRow>
                           </TableHead>
                           <TableBody >
@@ -145,9 +144,6 @@ class PlayListContent extends Component {
                                       </TableCell>
                                       <TableCell> 
                                           <p className={classes.root_uploadby}>{row.uploadBy}</p>
-                                      </TableCell>
-                                      <TableCell> 
-                                          <p className={classes.root_duration}>{row.duration}</p>
                                       </TableCell>
                                   </TableRow>
                               ))}
