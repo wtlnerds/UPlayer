@@ -2,6 +2,7 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
+const homedir = require('os').homedir();
 const fs = require('fs')
 const ytdl = require('ytdl-core')
 const youtubeSearch = require('youtube-search')
@@ -12,8 +13,10 @@ const youtubeSearch = require('youtube-search')
 let mainWindow
 // slice the EOF character here
 const secret = fs.readFileSync(path.join(__dirname, 'secret_key'), 'utf8').slice(0, -1)
-console.log(secret)
-
+const resourcePath = path.join(homedir, '/Music/UPlayer')
+if (!fs.existsSync(resourcePath)){
+    fs.mkdirSync(resourcePath);
+}
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -21,7 +24,8 @@ function createWindow () {
     height: 800,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    icon: path.join(__dirname, 'assets/AppIcon.icns')
   })
 
   // and load the index.html of the app.
@@ -69,13 +73,12 @@ function trim(str){
 }
 
 ipcMain.on('fetch-track-byte', (event, arg) => {
-  //  console.log(path.join(__dirname, '/tmp', arg))
-  const fileBytes = fs.readFileSync(path.join(__dirname, '/tmp', arg))
+  const fileBytes = fs.readFileSync(path.join(resourcePath, arg))
   event.sender.send('receive-track-byte', fileBytes)
 })
 
 ipcMain.on('fetch-track-list', (event, arg) => {
-  const trackLocation = path.join(__dirname, '/tmp')
+  const trackLocation = path.join(resourcePath)
   fs.readdir(trackLocation, (err, items) => {
     event.sender.send(
       'receive-track-list', 
@@ -91,7 +94,7 @@ ipcMain.on('download-audio', (event, arg) => {
   if(!url) return
   const name = arg.name ? arg.name : url.substr(url.length-11)
   ytdl(url, { filter: "audioonly" })
-    .pipe(fs.createWriteStream(path.join(__dirname, "./tmp/", trim(name) + ".mp3")))
+    .pipe(fs.createWriteStream(path.join(resourcePath, trim(name) + ".mp3")))
 })
 
 ipcMain.on('youtube-search', (event, arg) => {
