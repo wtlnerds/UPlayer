@@ -1,12 +1,7 @@
 {
   "name": "uplayer",
   "version": "0.0.1",
-  "description": "A minimal Electron application",
   "main": "main.js",
-  "scripts": {
-    "start": "electron . & react-scripts start",
-    "build": "react-scripts build"
-  },
   "homepage": "./",
   "keywords": [
     "Electron",
@@ -19,6 +14,7 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^4.0.7",
+    "electron-builder": "^20.39.0",
     "react-scripts": "^2.1.5"
   },
   "dependencies": {
@@ -33,18 +29,33 @@
     "youtube-search": "^1.1.4",
     "ytdl-core": "^0.29.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/V1c1ss1tudes/U-Player.git"
-  },
-  "bugs": {
-    "url": "https://github.com/V1c1ss1tudes/U-Player/issues"
-  },
-  "homepage": "https://github.com/V1c1ss1tudes/U-Player#readme",
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "scripts": {
+    "start": "nf start -p 3000",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "electron-start": "node electron-wait-react",
+    "electron-pack": "build --em.main=build/electron.js",
+    "preelectron-pack": "yarn build",
+    "react-start": "react-scripts start",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.electron.uplayer",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories":{
+      "buildResources": "assets"
+    }  
+  }
 }
