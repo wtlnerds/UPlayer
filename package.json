@@ -29,6 +29,7 @@
     "react-dom": "^16.8.4",
     "react-loading-overlay": "^1.0.1",
     "react-spinners": "^0.5.3",
+    "youtube-search": "^1.1.4",
     "ytdl-core": "^0.29.1"
   },
   "repository": {

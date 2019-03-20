@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import FSModule from '../../utils/file_system.js';
 
 
 const styles = theme => ({
@@ -61,9 +62,24 @@ const styles = theme => ({
 });
 
 class PrimarySearchAppBar extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {searchQuery: ""}
+    this.onDataReceived = props.onDataReceived 
+  }
 
+  updateInputValue(evt) {
+    this.setState({searchQuery: evt.target.value})
+  }
+
+  handleKeyPressed(evt){
+    if(evt.key === 'Enter'){
+      FSModule.youtubeSearch(evt.target.value).then((data) => {
+        this.onDataReceived(data)
+      })
+    }
+  }
   render() {
-
     const { classes } = this.props;
 
     return (
@@ -79,6 +95,7 @@ class PrimarySearchAppBar extends React.Component {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              onKeyPress={(e) => this.handleKeyPressed(e)}
             />
           </div>
         </Toolbar>

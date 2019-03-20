@@ -4,7 +4,7 @@ import FSModule from "../../utils/file_system"
 export default class TestSearch extends Component {
     constructor(props){
         super(props)
-        this.state = {url: null}
+        this.state = {url: ''}
     }
 
     download (url) {
@@ -21,9 +21,9 @@ export default class TestSearch extends Component {
         return (
             <div>
                 <input value = {this.state.url}
-                onChange={evt => this.updateInputValue(evt)}
-                class="URL-input" placeholder="Video URL e.g. https://www.youtube.com/watch?v=MtN1YnoL46Q" />
-                <button onClick = {() => this.download(this.state.url)} class="convert-button">Convert</button>
+                  onChange={evt => this.updateInputValue(evt)}
+                />
+                <button onClick = {() => this.download({url: this.state.url})}>Download</button>
             </div>
         )
     }

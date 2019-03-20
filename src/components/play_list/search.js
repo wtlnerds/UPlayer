@@ -6,9 +6,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
-import PopoutVideo from './popout_video';
-// import {Popout} from 'react-popout-component';
 
+import PrimarySearchAppBar from './primary_appsearch_bar';
+import FSModule from '../../utils/file_system.js';
 const styles = ({
     root: {
         width: '83.34vw',
@@ -75,108 +75,85 @@ const styles = ({
 
   });
 
-class SearchResult extends Component{
+class Search extends Component{
 
     constructor(props) {
         super(props);
         
+        this.onDataReceived = this.onDataReceived.bind(this)
         this.state = {
-            showWindowPortal: false,
+          showWindowPortal: false,
+          data: []
         };
-        
-        this.toggleWindowPortal = this.toggleWindowPortal.bind(this);
-        this.closeWindowPortal = this.closeWindowPortal.bind(this);
-      }
-      
-      toggleWindowPortal() {
-        this.setState(state => ({
-          ...state,
-          showWindowPortal: !state.showWindowPortal,
-        }));
-      }
-
-      componentDidMount() {
-        window.addEventListener('beforeunload', () => {
-          this.closeWindowPortal();
-        });}
-
-      closeWindowPortal() {
-        this.setState({ showWindowPortal: false })
       }
     
-    render(){
-        const data = [1,1,1,1,1,1,1,1,1,1] // testing, need to delete later
+      onDataReceived(data) {
+        this.setState({data: data})
+      }
 
+      download(obj) {
+        FSModule.download(obj)
+      }
+      
+      render(){
+        const data = this.state.data
         const {classes} = this.props;
 
         return(
+        <div>
+        <div className="primary-appsearch-bar">
+          <PrimarySearchAppBar onDataReceived={this.onDataReceived}></PrimarySearchAppBar>
+        </div>
         <div className={classes.root}>
             <Typography className={classes.header} component="h5" variant="h5">
-            搜索“xxx”返回的结果
+            搜索结果
             </Typography>
                 <div>
-                    {/* Testing, need to delete this later*/}
-                    {data.map(element => (
-                        <Card className={classes.card} elevation={0} >
+                    {data.map((d, index) => (
+                        <Card key={index} className={classes.card} elevation={0} >
                                 <div>
                                     <CardContent className={classes.content}>
                                         <CardMedia
                                         className={classes.cover}
-                                        image="https://img.youtube.com/vi/ry3Tupx4BL4/maxresdefault.jpg"
+                                        image={d.thumbnails.high.url}
                                         />
                                         <div className={classes.text}>
                                             <Typography variant="body1">
-                                            【HD】以冬 - 我的一個道姑朋友 [歌詞字幕][遊戲《劍俠情緣網絡版3》同人主題曲][完整高清音質] Yi Dong - One Of My Taoist Nun Friends
+                                              {d.title}
                                             </Typography>
                                             <Typography variant="body2" color="textSecondary">
-                                                &nbsp;&nbsp;Uploadby: Mac Miller1111111111111111111111111111
+                                                Uploadby: {d.channelTitle}
                                             </Typography>
                                         </div>
                                         <Typography variant="subtitle2" className={classes.description}>
-                                            Description: ヨルシカ - パレード 
-                                            Yorushika - Parade
-
-                                            作詞作曲、編曲(Words and Music,Arranged)：n-buna 
-                                            Vocal：suis 
-
-                                            Music Video Directed by 大鳥
-                                            Camera : アフガンRAY
-
-                                            3rd Album 「だから僕は音楽を辞めた」
-                                            
-                                            2019年4月10日(水)発売、予約受付中
-                                            http://yorushika.com
+                                          {d.description}
                                         </Typography>
 
                                         <Button
                                         className={classes.watch} 
                                         variant="contained" 
-                                        color="secondary"
-                                        onClick={this.toggleWindowPortal}>
+                                        color="secondary">
                                         Watch
                                         <Icon className={classes.watchicon}>ondemand_video</Icon>
                                         </Button> 
 
-                                        {this.state.showWindowPortal && (
-                                            <PopoutVideo>
-                                                <div>
-                                                </div>
-                                            </PopoutVideo>
-                                        )}
-
-                                        <Button variant="contained" color="primary" className={classes.download}>
-                                        download
-                                        <Icon className={classes.downloadicon}>get_app</Icon>
+                                        <Button 
+                                          variant="contained" 
+                                          color="primary"
+                                          className={classes.download}
+                                          onClick={() => this.download({url: d.link, name: d.title})}
+                                        >
+                                          download
+                                          <Icon className={classes.downloadicon}>get_app</Icon>
                                         </Button>
                                     </CardContent>
                                 </div>
                         </Card>
                     ))}
                 </div>
-
           </div>
-        )
+      </div>)
     }
 }
 
-export default withStyles(styles)(SearchResult);
+export default withStyles(styles)(Search);

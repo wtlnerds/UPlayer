@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Player from './components/player/player.js'
 import './App.css';
-import PrimarySearchAppBar from './components/play_list/primary_appsearch_bar.js'
 import PlayListContent from './components/play_list/play_list_content.js'
 import PlayNavigator from './components/column_of_play_list/play_navigator.js'
 import LoadingOverlay from 'react-loading-overlay';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import MyFavorite from './components/play_list/my_favorite.js'
-import SearchResult from './components/play_list/search_result.js';
+import Search from './components/play_list/search.js';
 
 import FSModule from './utils/file_system';
 
@@ -30,7 +29,7 @@ class App extends Component {
     FSModule.loadTrackList().then((res) => {
       this.setState({
         tracks: res.map((v, i) => {
-          return this.createData(v, '米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师米津玄师', 1, i, false)
+          return this.createData(v, 'I\'m an Artist', i, false)
         })
       })
     })
@@ -43,8 +42,8 @@ class App extends Component {
     });
   }
 
-  createData(name, uploadBy, duration, id, liked) {  
-    return { name, uploadBy, duration, id, liked};
+  createData(name, uploadBy, id, liked) {  
+    return { name, uploadBy, id, liked };
   }   
 
   loadTrack(track){
@@ -90,7 +89,7 @@ class App extends Component {
                  </MyFavorite>)
       case 2:
       // 时下流行 case: This may need to be changed, change to taking specific youtube url
-        return (<SearchResult> </SearchResult>)
+        return (<Search> </Search>)
       default:
         return (<PlayListContent
                 loadTrack={this.loadTrack}
@@ -121,9 +120,6 @@ class App extends Component {
             <PlayNavigator handleNavigation = {handleNavigation}> </PlayNavigator>
           </div> 
           <div className = "play-list">
-            <div className="primary-appsearch-bar">
-                <PrimarySearchAppBar></PrimarySearchAppBar>
-            </div> 
             <div className="play-list-content">
               {this.getPage(this.state.navigation)}
             </div>

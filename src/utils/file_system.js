@@ -21,9 +21,18 @@ module.exports = {
     });
   },
 
-  download: (url) => {
+  download: (obj) => {
     return new Promise(resolve => {
-      ipcRenderer.send('download-audio', url)
+      ipcRenderer.send('download-audio', obj)
+    })
+  },
+
+  youtubeSearch: (q) => {
+    return new Promise(resolve => {
+      ipcRenderer.on('youtube-search-result', (event, result) => {
+        resolve(result)
+      })
+      ipcRenderer.send('youtube-search', q)
     })
   }
 }
