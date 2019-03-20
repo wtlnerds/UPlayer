@@ -78,23 +78,30 @@ class App extends Component {
   getPage(index){
     switch (index) {
       case 0:
-        return (<PlayListContent
+        return (<div className="play-list-content">
+                <PlayListContent
                 loadTrack={this.loadTrack}
                 tracks = {this.state.tracks}>
-                </PlayListContent>)
+                </PlayListContent>
+                </div>)
       case 1:
-        return (<MyFavorite
+        return (<div className="play-list-content">
+                <MyFavorite
                 loadTrack={this.loadTrack}
                 tracks = {this.state.tracks}>
-                 </MyFavorite>)
+                 </MyFavorite>
+                 </div>)
       case 2:
       // 时下流行 case: This may need to be changed, change to taking specific youtube url
-        return (<Search> </Search>)
+        return (<div className="search_result"><Search> </Search> </div>)
+
       default:
-        return (<PlayListContent
+        return (<div className="play-list-content">
+                <PlayListContent
                 loadTrack={this.loadTrack}
                 tracks = {this.state.tracks}>
-                </PlayListContent>)
+                </PlayListContent>
+                </div>)
     }
   }
 
@@ -120,9 +127,7 @@ class App extends Component {
             <PlayNavigator handleNavigation = {handleNavigation}> </PlayNavigator>
           </div> 
           <div className = "play-list">
-            <div className="play-list-content">
               {this.getPage(this.state.navigation)}
-            </div>
           </div>
         </div>
       </LoadingOverlay>
