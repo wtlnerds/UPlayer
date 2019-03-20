@@ -37,11 +37,19 @@
   margin-left: 16.67vw;
 }
 
+/*  The Layout for 试听列表/我的最爱 */
 .play-list-content {
-  height: calc(90vh - 64px);
-  margin-top: 64px;
+  height: calc(90vh);
   overflow: scroll;
 }
+
+/* The Layout for 当下流行/搜索结果 */
+.search_result {
+  height: calc(90vh - 64px);
+  overflow: scroll;
+  margin-top: 64px;
+}
+
 /* lower portion of the app interface */
 .player-app {
   grid-area: lower;
@@ -55,7 +63,7 @@
   background-color: white;
 }
 
-/* Audio player in player portion*/
+/* Audio player in player portion */
 
 .player {
   display: flex;
