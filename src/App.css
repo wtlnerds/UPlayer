@@ -118,8 +118,15 @@
 }
 
 .duration-alter {
-  padding-left: 10vw;
-  padding-top: 3px;
+  position: fixed;
+  padding-left: 42vw;
+  padding-top: 2px;
+}
+
+.volume-play {
+  position: fixed;
+  padding-left: 53vw;
+  padding-top: 5px;
 }
 
 .slider {
@@ -130,9 +137,9 @@
 .controller-interface { /* This is the three buttons */
   display: flex;
   justify-content: space-evenly;
-  width: 30vw;
+  width: 35vw;
   align-items: baseline; /* This is for meet in the middle for the play,prev,next buttons */
-  margin-top: 1vh;
+  margin-top:17px; 
 }
 
 /* Keep just in case messed up the animation*/
