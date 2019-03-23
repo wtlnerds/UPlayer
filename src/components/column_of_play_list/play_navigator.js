@@ -71,9 +71,9 @@ class PlayNavigator extends React.Component {
             onClick={() => this.handleNavigation(2)}
           >
             <ListItemIcon>
-                <Icon>signal_cellular_alt</Icon>
+                <Icon>find_in_page</Icon>
             </ListItemIcon>
-            <ListItemText primary="时下流行" />
+            <ListItemText primary="搜索歌曲" />
           </ListItem>
         </List>
         <Divider />

@@ -10,7 +10,9 @@ import LoadingOverlay from 'react-loading-overlay';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import FSModule from '../../utils/file_system';
 import { withStyles } from '@material-ui/core/styles';
-import Icon from '@material-ui/core/Icon';
+// import Icon from '@material-ui/core/Icon';
+
+// This part need to be fixed, once the play_list_content part is fully functioning
 
 function createData(name, uploadBy, duration, id) {  
   return { name, uploadBy, duration, id};
@@ -89,7 +91,7 @@ class MyFavorite extends Component {
                 <Card elevation={0}>
                     <CardContent>
                         <div className="name-of-play-list" position="fixed">
-                            <h2>我的喜欢</h2>
+                            <h2>我的最爱</h2>
                         </div>
                         <div className="information-of-play-list">
                             <Table>
@@ -111,7 +113,6 @@ class MyFavorite extends Component {
                                         >   
                                             <TableCell component="th" scope="row">
                                                 <div className={classes.root}>
-                                                    <Icon className={classes.root_icon}>favorite</Icon>
                                                     <p className={classes.root_name}>{row.name.substr(0,row.name.length-4)}</p>
                                                 </div>
                                             </TableCell>

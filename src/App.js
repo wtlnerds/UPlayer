@@ -35,7 +35,6 @@ class App extends Component {
     })
   }
 
-  // Changes on downlaod branch
   handleNavigation(index) {
     this.setState({
         navigation:index,

@@ -5,10 +5,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
-import Button from '@material-ui/core/Button';
-
 import PrimarySearchAppBar from './primary_appsearch_bar';
 import FSModule from '../../utils/file_system.js';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+
 const styles = ({
     root: {
         width: '83.34vw',
@@ -81,12 +83,33 @@ class Search extends Component{
         super(props);
         
         this.onDataReceived = this.onDataReceived.bind(this)
+        this.onDownloadClicked = this.onDownloadClicked.bind(this)
+
         this.state = {
-          showWindowPortal: false,
-          data: []
+          data: [],
+          open: false,
+          selected: 0
         };
       }
+      
+      handleClick = (curr) => {
+        this.setState({ open: true, selected: curr});
+      };
     
+      handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        this.setState({ open: false, selected: 0});
+      };
+
+      onDownloadClicked(obj,curr){
+        // put your method here
+        this.download(obj);
+        this.handleClick(curr);
+      }
+
       onDataReceived(data) {
         this.setState({data: data})
       }
@@ -141,11 +164,37 @@ class Search extends Component{
                                           variant="contained" 
                                           color="primary"
                                           className={classes.download}
-                                          onClick={() => this.download({url: d.link, name: d.title})}
+                                          onClick={() => this.onDownloadClicked({url: d.link, name: d.title}, index)}
                                         >
                                           download
                                           <Icon className={classes.downloadicon}>get_app</Icon>
                                         </Button>
+
+                                        {this.state.selected === index && (
+                                          <Snackbar
+                                          className={classes.downloadSign}
+                                          variant="info"
+                                          anchorOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                          }}
+                                          open={this.state.open}
+                                          autoHideDuration={6000}
+                                          onClose={this.handleClose}
+                                          ContentProps={{
+                                            'aria-describedby': 'message-id',
+                                          }}
+                                          message={<span id="message-id"> 开始下载 {d.title.substr(0,30)}</span>}
+                                          action={[
+                                            <IconButton
+                                              key="close"
+                                              aria-label="Close"
+                                              color="inherit"
+                                              onClick={this.handleClose}
+                                            >
+                                              <Icon>close</Icon>
+                                            </IconButton>,
+                                          ]} />)}
                                     </CardContent>
                                 </div>
                         </Card>
