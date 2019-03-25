@@ -72,7 +72,7 @@ class Audio {
         this.audioBufferSourceNode = this.context.createBufferSource()
         this.audioBufferSourceNode.buffer = this.sourceBuffer
         this.audioBufferSourceNode.connect(this.context.destination)
-        this.audioBufferSourceNode.loop = true
+        // this.audioBufferSourceNode.loop = true
         this.audioBufferSourceNode.start(this.context.currentTime, this.position)
         this.status = this.PLAYER_STATUS.PLAYING
         // timer
