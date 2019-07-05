@@ -1,3 +1,5 @@
+import FSModule from './file_system'
+
 class Audio {
     static currentAudio = null
     
@@ -45,20 +47,21 @@ class Audio {
 
     init(
       audioCtx, 
-      audioFileBytes, 
+      track,
       onLoadFinished, 
       onPlaying,
       onPlayingFinished
     ){
-        if(!audioFileBytes) return
-        // console.log(audioFileBytes)
-        let arrayBuffer = audioFileBytes.buffer
-        this.onPlaying = onPlaying
-        this.onPlayingFinished = onPlayingFinished
-        this.context = audioCtx
-        this.context.decodeAudioData(arrayBuffer, (buffer) => {
-            this.sourceBuffer = buffer
-            onLoadFinished()
+        if(!track) return
+        FSModule.loadTrack(track).then((res) => {
+          let arrayBuffer = res.buffer
+          this.onPlaying = onPlaying
+          this.onPlayingFinished = onPlayingFinished
+          this.context = audioCtx
+          this.context.decodeAudioData(arrayBuffer, (buffer) => {
+              this.sourceBuffer = buffer
+              onLoadFinished()
+          })  
         })
     }
 

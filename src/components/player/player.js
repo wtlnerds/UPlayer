@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
-import Slider from '@material-ui/lab/Slider';
+import Slider from '@material-ui/lab/Slider'
 import ControlInterface from './control_interface'
-import FSModule from '../../utils/file_system'
 import Audio from '../../utils/audio'
-import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import { withStyles } from '@material-ui/core/styles';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import TrackQueue from '../../utils/track_queue'
+import Icon from '@material-ui/core/Icon'
+import IconButton from '@material-ui/core/IconButton'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import Grow from '@material-ui/core/Grow'
+import Paper from '@material-ui/core/Paper'
+import Popper from '@material-ui/core/Popper'
+import { withStyles } from '@material-ui/core/styles'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 const muiTheme = createMuiTheme({
   overrides: {
@@ -76,9 +76,10 @@ class Player extends Component {
 
   // handles click when each type of playing methods is involved
   handleSelectedPlay(index) {
+    TrackQueue.toggleState()
     this.setState({
       selectedPlay: index,
-  });
+    });
   }
 
   // display buttons for different types of playing music
@@ -96,20 +97,17 @@ class Player extends Component {
 
   componentDidUpdate(prevProps){
     if(this.props.track !== prevProps.track){
-        // first we need to stop current playing audio
-        //　停一下.jpg
+        //停一下.jpg
         Audio.getAudio().pause()
         // then load entire new track
-        FSModule.loadTrack(this.props.track.name).then((res) => {
-          Audio.reset()
-          Audio.getAudio().init(
-            new AudioContext(), 
-            res, 
-            () => this.onLoadFinished(this), 
-            (time) => this.onPlayingNotify(this, time),
-            () => this.onTrackChange(1)
-          )
-        })
+        Audio.reset()
+        Audio.getAudio().init(
+           new AudioContext(), 
+           this.props.track.name,
+           () => this.onLoadFinished(this), 
+           (time) => this.onPlayingNotify(this, time),
+           () => this.onTrackChange(1)
+        )
     }
   }
 
